@@ -11,12 +11,18 @@ public class OneThreadSorter extends Model implements Merger {
     private final static int MIN_ARRAY_SIZE = 1;
     private ElementGroup unsorted;
     private ElementGroup sorted;
+    private int delayInMs;
 
     public OneThreadSorter(ElementGroup unsorted) {
         this.unsorted = unsorted;
     }
 
     public void sort() {
+        try {
+            Thread.sleep(delayInMs);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (unsorted.getElements().getArray().length > MIN_ARRAY_SIZE) {
             OneThreadSorter leftSort = SortersUtils.createNewOneThreadSorter(
                     new Array(unsorted.getElements().getLeftPart()),

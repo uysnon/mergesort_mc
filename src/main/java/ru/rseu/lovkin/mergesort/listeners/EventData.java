@@ -4,18 +4,12 @@ import lombok.Builder;
 
 @Builder
 public class EventData {
-    private Sender sender;
     private Event event;
     private Object data;
 
-    public EventData(Sender sender, Event event, Object data){
-        this.sender = sender;
+    public EventData(Event event, Object data){
         this.event = event;
         this.data = data;
-    }
-
-    public Sender getSender() {
-        return sender;
     }
 
     public Event getEvent() {

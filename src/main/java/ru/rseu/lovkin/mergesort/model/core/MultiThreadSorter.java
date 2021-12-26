@@ -14,6 +14,7 @@ public class MultiThreadSorter extends Model implements Runnable, Merger {
     private ElementGroup unsorted;
     private ElementGroup sorted;
     private ThreadSortersCounter threadSortersCounter;
+    private int delayInMs;
 
     public MultiThreadSorter(ElementGroup unsorted) {
         this.unsorted = unsorted;
@@ -36,6 +37,11 @@ public class MultiThreadSorter extends Model implements Runnable, Merger {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(delayInMs);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (unsorted.getElements().getArray().length > MIN_ARRAY_SIZE) {
             if (threadSortersCounter.pop(SPLIT_ARRAY_SIZE)) {
 

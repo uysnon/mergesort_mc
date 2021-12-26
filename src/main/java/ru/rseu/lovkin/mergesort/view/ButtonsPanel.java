@@ -10,17 +10,32 @@ public class ButtonsPanel extends JPanel {
     private static final String GENERATE_NEW_BUTTON_TEXT = "Generate new";
     private static final String STOP_BUTTON_TEXT = "Stop";
     private static final String RESUME_BUTTON_TEXT = "Resume";
-
+    private CalculatingStatus currentStatus;
     private ButtonsClickListener buttonsClickListener;
+    private JLabel statusLabel;
+    private JButton startButton;
+    private JButton generateButton;
+    private JButton stopButton;
+    private JButton resumeButton;
 
+    public void setCurrentStatus(CalculatingStatus currentStatus) {
+        this.currentStatus = currentStatus;
+        this.statusLabel.setText(" " + currentStatus.getText());
+    }
 
     public void init(ButtonsClickListener buttonsClickListener) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.buttonsClickListener = buttonsClickListener;
-        add(createStartJButton());
+        startButton = createStartJButton();
+        add(startButton);
+        stopButton = createStopJButton();
         add(createStopJButton());
-        add(createGenerateNewJButton());
-        add(createResumeJButton());
+        generateButton = createGenerateNewJButton();
+        add(generateButton);
+        resumeButton = createResumeJButton();
+        add(resumeButton);
+        statusLabel = createStatusLabel();
+        add(statusLabel);
     }
 
     private JButton createStartJButton() {
@@ -55,5 +70,9 @@ public class ButtonsPanel extends JPanel {
         return jButton;
     }
 
-
+    private JLabel createStatusLabel() {
+        JLabel jLabel = new JLabel();
+        jLabel.setText(currentStatus == null ? "" : currentStatus.getText());
+        return jLabel;
+    }
 }

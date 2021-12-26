@@ -19,13 +19,23 @@ public class SortersUtils {
         MultiThreadSorter multiThreadSorter = new MultiThreadSorter(elementGroup);
         multiThreadSorter.setThreadSortersCounter(sorter.getThreadSortersCounter());
         multiThreadSorter.setListenerList(sorter.getListenerList());
+        multiThreadSorter.setDelayInMs(sorter.getDelayInMs());
         return multiThreadSorter;
     }
 
-    public OneThreadSorter createNewOneThreadSorter(Array array, Model model, ElementGroup... parentGroup) {
+    public OneThreadSorter createNewOneThreadSorter(Array array, OneThreadSorter sorter, ElementGroup... parentGroup) {
         ElementGroup elementGroup = createNewElementGroupFromParent(array, parentGroup);
         OneThreadSorter oneThreadSorter = new OneThreadSorter(elementGroup);
-        oneThreadSorter.setListenerList(model.getListenerList());
+        oneThreadSorter.setListenerList(sorter.getListenerList());
+        oneThreadSorter.setDelayInMs(sorter.getDelayInMs());
+        return oneThreadSorter;
+    }
+
+    public OneThreadSorter createNewOneThreadSorter(Array array, MultiThreadSorter sorter, ElementGroup... parentGroup) {
+        ElementGroup elementGroup = createNewElementGroupFromParent(array, parentGroup);
+        OneThreadSorter oneThreadSorter = new OneThreadSorter(elementGroup);
+        oneThreadSorter.setListenerList(sorter.getListenerList());
+        oneThreadSorter.setDelayInMs(sorter.getDelayInMs());
         return oneThreadSorter;
     }
 }

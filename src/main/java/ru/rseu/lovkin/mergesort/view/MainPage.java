@@ -1,29 +1,44 @@
 package ru.rseu.lovkin.mergesort.view;
 
 import lombok.Data;
+import ru.rseu.lovkin.mergesort.controller.Controller;
+import ru.rseu.lovkin.mergesort.listeners.Listener;
+import ru.rseu.lovkin.mergesort.model.layeres.MergeSortModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 @Data
 public class MainPage extends JPanel {
+    private Controller controller;
     private ButtonsPanel buttonsPanel;
     private ArrayPanel arrayPanel;
+    private CalculatingStatus currentStatus;
+    private Refreshable formRefresher;
+    private Listener modelListener;
 
-    public void init(){
+    public void setCurrentStatus(CalculatingStatus currentStatus) {
+        this.currentStatus = currentStatus;
+        buttonsPanel.setCurrentStatus(currentStatus);
+    }
+
+    public void init() {
         this.setLayout(new BorderLayout());
         buttonsPanel = new ButtonsPanel();
         buttonsPanel.init(createButtonClickListener());
-        add(buttonsPanel,  BorderLayout.WEST);
+        add(buttonsPanel, BorderLayout.WEST);
         ArrayPanel arrayPanel = new ArrayPanel();
+        arrayPanel.setMergeSortModel(controller.getMergeSortModel());
         add(arrayPanel);
+        this.arrayPanel = arrayPanel;
     }
 
-    private ButtonsClickListener createButtonClickListener(){
+    private ButtonsClickListener createButtonClickListener() {
         return new ButtonsClickListener() {
             @Override
             public void onStartButtonClicked() {
-                System.out.println("on start");
+                controller.start();
+                setCurrentStatus(CalculatingStatus.CALCULATING);
             }
 
             @Override
@@ -38,7 +53,11 @@ public class MainPage extends JPanel {
 
             @Override
             public void onGenerateNewButtonClicked() {
-                System.out.println("on new game");
+                MergeSortModel newModel = controller.generateNewModel();
+                controller.addListener(modelListener);
+                arrayPanel.setMergeSortModel(newModel);
+                setCurrentStatus(CalculatingStatus.READY_TO_CALCULATE);
+                formRefresher.refresh();
             }
         };
     }

@@ -6,4 +6,5 @@ import lombok.Data;
 public class ModelParams {
     private int arraySize;
     private int threadPullSize;
+    private int delayInMs;
 }
