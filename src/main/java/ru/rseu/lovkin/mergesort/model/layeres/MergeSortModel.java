@@ -9,6 +9,7 @@ import ru.rseu.lovkin.mergesort.listeners.Listener;
 import ru.rseu.lovkin.mergesort.listeners.ListenerList;
 import ru.rseu.lovkin.mergesort.model.core.Array;
 import ru.rseu.lovkin.mergesort.model.core.MultiThreadSorter;
+import ru.rseu.lovkin.mergesort.model.time.Timer;
 
 import java.util.*;
 
@@ -56,6 +57,7 @@ public class MergeSortModel implements Listener {
             addElementGroup((ElementGroup) eventData.getData());
             listeners.notify(eventData);
             if (isElementGroupResult((ElementGroup) eventData.getData())) {
+                Timer.INSTANCE.stop();
                 EventData resultFoundEventData = new EventData(
                         Event.SORT_END,
                         ((ElementGroup) eventData.getData()).getElements().getArray());

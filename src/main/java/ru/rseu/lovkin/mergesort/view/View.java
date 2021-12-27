@@ -46,12 +46,13 @@ public class View extends JFrame implements Listener, Refreshable {
 
     @Override
     public void refresh() {
+        mainPage.refresh();
         revalidate();
         transferFocus();
         repaint();
     }
 
-    private void initMainPage(){
+    private void initMainPage() {
         mainPage = new MainPage();
         mainPage.setController(controller);
         mainPage.init();

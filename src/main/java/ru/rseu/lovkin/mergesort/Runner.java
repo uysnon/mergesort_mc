@@ -18,23 +18,7 @@ import java.util.Arrays;
 
 public class Runner {
 
-    public static void main(String[] args) throws InterruptedException {
-//        ThreadSortersCounter counter = new ThreadSortersCounter(10);
-//        Array array = ArraysCreator.create(15);
-//        MultiThreadSorter multiThreadSorter = new MultiThreadSorter(new ElementGroup(array));
-//        multiThreadSorter.setThreadSortersCounter(counter);
-//
-//        MergeSortModel mergeSortModel = new MergeSortModel();
-//        mergeSortModel.setInitialArrayCapacity(array.getArray().length);
-//        mergeSortModel.addElementGroup(multiThreadSorter.getUnsorted());
-//
-//        multiThreadSorter.setListenerList(ListenerList.of(mergeSortModel));
-//
-//        Thread thread = new Thread(multiThreadSorter);
-//        thread.start();
-//
-//        thread.join();
-//        System.out.println(Arrays.toString(multiThreadSorter.getSorted().getElements().getArray()));
+    public static void main(String[] args) {
         MergeSortModel mergeSortModel = ModelCreator.createModel(ModelParamsManager.read());
         Controller controller = new Controller(mergeSortModel);
         View view  = new View(controller);
